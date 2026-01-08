@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import com.sachin.project1.dto.StudentDto;
 import com.sachin.project1.entity.StudentEntity;
@@ -80,8 +81,9 @@ public class StudentServiceImplement implements StudentService {
 
 
   // Pagination Logic
-  public Page<StudentDto> getStudentPaginated(int page, int size){
-    Pageable pageable = PageRequest.of(page,size);
+  @Override
+  public Page<StudentDto> getStudentPaginatednSorted(int page, int size, String sortBy){
+    Pageable pageable = PageRequest.of(page,size, Sort.by(sortBy).ascending());
     Page<StudentEntity> entities = studentRepository.findAll(pageable);
     return entities.map(this::maptoDto);
   }

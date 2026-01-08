@@ -5,6 +5,7 @@ import com.sachin.project1.service.StudentService;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -56,5 +59,18 @@ public class StudentController {
     studentService.deleteStudent(id);
     return ResponseEntity.noContent().build();
   }
+
+  // Pagination Endpoints
+  @GetMapping("/paged")
+  public ResponseEntity<Page<StudentDto>> getStudentPagednSorted(
+    @RequestParam(defaultValue = "0") int page, 
+    @RequestParam(defaultValue = "5") int size,
+    @RequestParam(defaultValue = "id") String sortBy
+  ) {
+    return ResponseEntity.ok(
+      studentService.getStudentPaginatednSorted(page,size, sortBy)
+    );
+  }
+  
 
 }
