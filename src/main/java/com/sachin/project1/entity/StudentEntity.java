@@ -1,14 +1,21 @@
 package com.sachin.project1.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+
+import java.time.LocalDate;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 
 @Entity
-@Table
+@Table(name = "students")
 public class StudentEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +28,14 @@ public class StudentEntity {
   @Column
   private String email;
 
+
+  // Relationships
+
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+  @JoinColumn(name = "student_profile_id")
+  private StudentProfile studentProfile;
+
+
   public Long getId(){
     return id;
   }
@@ -28,6 +43,7 @@ public class StudentEntity {
   public String getName(){
     return name;
   }
+
   public String getEmail(){
     return email;
   }
@@ -40,6 +56,12 @@ public class StudentEntity {
     this.email = email;
   }
 
+  public void setStudentProfile(StudentProfile profile){
+    this.studentProfile = profile;
+  }
 
+  public StudentProfile getStudentProfile(){
+    return studentProfile;
+  }
 
 }

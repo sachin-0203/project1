@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 
 import com.sachin.project1.dto.StudentDto;
 import com.sachin.project1.entity.StudentEntity;
+import com.sachin.project1.entity.StudentProfile;
 import com.sachin.project1.exception.StudentNotFoundException;
 import com.sachin.project1.repository.StudentRepository;
 
@@ -53,6 +54,15 @@ public class StudentServiceImplement implements StudentService {
     student.setName(dto.getName());
     student.setEmail(dto.getEmail());
 
+    if(student.getStudentProfile() == null){
+      StudentProfile profile = new StudentProfile();
+      profile.setDob(dto.getDob());
+      student.setStudentProfile(profile);
+    } 
+    else{
+      student.getStudentProfile().setDob(dto.getDob());
+    }
+
     StudentEntity updatedStudent = studentRepository.save(student);
     return maptoDto(updatedStudent);
   }
@@ -72,11 +82,28 @@ public class StudentServiceImplement implements StudentService {
     StudentEntity entity = new StudentEntity();
     entity.setName(dto.getName());
     entity.setEmail(dto.getEmail());
+    
+    if(dto.getDob() != null ){
+      StudentProfile profile = new StudentProfile();
+      profile.setDob(dto.getDob());
+      entity.setStudentProfile(profile);
+    }
+    
     return entity;
   }
 
+
   private StudentDto maptoDto(StudentEntity entity){
-    return new StudentDto(entity.getId(), entity.getName(), entity.getEmail());
+    
+    StudentDto dto = new StudentDto();
+    dto.setName(entity.getName());
+    dto.setEmail(entity.getEmail());
+
+    if(entity.getStudentProfile() != null){
+      dto.setDob(entity.getStudentProfile().getDob());
+    }
+
+    return dto;
   }
 
 

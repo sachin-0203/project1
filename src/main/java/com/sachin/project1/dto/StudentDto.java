@@ -1,5 +1,7 @@
 package com.sachin.project1.dto;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -10,4 +12,7 @@ public class StudentDto {
   private String name;
   private String email;
 
+  private LocalDate dob;
+
+  public StudentDto(){}; // create it manually or add @NoArgsConstructor
 }
