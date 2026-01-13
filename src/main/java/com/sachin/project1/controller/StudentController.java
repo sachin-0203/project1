@@ -71,6 +71,15 @@ public class StudentController {
       studentService.getStudentPaginatednSorted(page,size, sortBy)
     );
   }
-  
 
+  // Custome Query Finder Methods
+  @GetMapping("/query")
+  public ResponseEntity<List<StudentDto>> findStudentName(@RequestParam String name) {
+    return ResponseEntity.ok(studentService.getStudentByName(name));
+  }
+
+  @GetMapping("/querys")
+  public ResponseEntity<List<StudentDto>> findStudentEmail (@RequestParam String email) {
+    return  ResponseEntity.ok(studentService.getStudentByEmail(email));
+  }
 }

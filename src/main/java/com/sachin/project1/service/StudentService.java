@@ -1,5 +1,6 @@
 package com.sachin.project1.service;
 import com.sachin.project1.dto.StudentDto;
+import com.sachin.project1.entity.StudentEntity;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface StudentService {
   StudentDto updateStudent(Long id , StudentDto dto);
   void deleteStudent(Long id);
   Page<StudentDto> getStudentPaginatednSorted(int page, int size, String sortBy);
+  List<StudentDto> getStudentByName(String name);
+  List<StudentDto> getStudentByEmail(String email);
 }

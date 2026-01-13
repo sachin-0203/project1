@@ -115,4 +115,24 @@ public class StudentServiceImplement implements StudentService {
     return entities.map(this::maptoDto);
   }
 
+  // Custome query methods
+  @Override
+  public List<StudentDto> getStudentByName(String name){
+    List<StudentEntity> students =  studentRepository.findByName(name);
+    if(students.isEmpty()){
+      throw new StudentNotFoundException("No Student is found with name: " + name);
+    }
+    return students.stream().map(this::maptoDto).toList();
+  }
+
+  @Override
+  public List<StudentDto> getStudentByEmail(String email){
+    List<StudentEntity> students =  studentRepository.findByEmail(email);
+    if(students.isEmpty()){
+      throw new StudentNotFoundException("No Students found with email: " + email);
+    }
+    return  students.stream().map(this::maptoDto).toList();
+  }
+
+
 }
